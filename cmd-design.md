@@ -10,16 +10,18 @@
 
 列出 register 命令的描述。
 
+## users
+
 ### 用户注册
 
-`agenda register -uUserName --password pass -email=a@xxx.com -phone=phoneNum`
+`agenda register -u [username] -p [password] -e [email] -t [tel]`
 
 注册新用户时，用户需设置一个唯一的用户名和一个密码。另外，还需登记邮箱及电话信息。
 如果注册时提供的用户名已由其他用户使用，应反馈一个适当的出错信息；成功注册后，亦应反馈一个成功注册的信息。
 
 ### 用户登录
 
-`agenda login -uUserName --password pass`
+`agenda login -u [userName] -p [password]`
 
 用户使用用户名和密码登录 Agenda 系统。
 用户名和密码同时正确则登录成功并反馈一个成功登录的信息。否则，登录失败并反馈一个失败登录的信息。
@@ -32,7 +34,7 @@
 
 ### 用户查询
 
-`agenda -lUser`
+`agenda lu`
 
 已登录的用户可以查看已注册的所有用户的用户名、邮箱及电话信息。
 
@@ -47,9 +49,11 @@
 以该用户为 发起者 的会议将被删除
 以该用户为 参与者 的会议将从 参与者 列表中移除该用户。若因此造成会议 参与者 人数为0，则会议也将被删除。
 
+## meetings
+
 ### 创建会议
 
-`agenda cm --title Name --participator user1 [user2 ....] --stime start --etime end`
+`agenda cm -t [title] -p [p1 p2 ....] -s [sTime] -e [eTime]`
 
 已登录的用户可以添加一个新会议到其议程安排中。会议可以在多个已注册 用户间举行，不允许包含未注册用户。添加会议时提供的信息应包括：
 会议主题(title)（在会议列表中具有唯一性）
@@ -61,9 +65,9 @@
 
 ### 增删会议参与者
 
-`agenda meetingadd --participator user1 [user2 ...]`
+`agenda ap -p [p1 p2 ...]`
 
-`agenda meetingdel --participator user1 [user2 ...]`
+`agenda dp -p [p1 p2 ...]`
 
 已登录的用户可以向 自己发起的某一会议增加/删除 参与者 。
 增加参与者时需要做 时间重叠 判断（允许仅有端点重叠的情况）。
@@ -71,7 +75,7 @@
 
 ### 查询会议
 
-`agenda querymeeting -stime start -etime end`
+`agenda qm -s [sTime] -e [eTime]`
 
 已登录的用户可以查询自己的议程在某一时间段(time interval)内的所有会议安排。
 用户给出所关注时间段的起始时间和终止时间，返回该用户议程中在指定时间范围内找到的所有会议安排的列表。
@@ -80,20 +84,20 @@
 
 ### 取消会议
 
-`agenda meetingdel --title Name`
+`agenda dm -t [title]`
 
 已登录的用户可以取消 自己发起 的某一会议安排。
 取消会议时，需提供唯一标识：会议主题（title）。
 
 ### 退出会议
 
-`agenda meetingout --ttile Name`
+`agenda qm -t [title]`
 
 已登录的用户可以退出 自己参与 的某一会议安排。
 退出会议时，需提供一个唯一标识：会议主题（title）。若因此造成会议 参与者 人数为0，则会议也将被删除。
 
 ### 清空会议
 
-`agenda meetingclear`
+`agenda clall`
 
 已登录的用户可以清空 自己发起 的所有会议安排。
