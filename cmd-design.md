@@ -1,10 +1,14 @@
 # Agenda 业务需求
 
-### help
+### 帮助
 
 `agenda help [option]`
 
 列出命令说明(可选是否列出具体功能的说明)。
+
+`agenda help register`
+
+列出 register 命令的描述。
 
 ### 用户注册
 
@@ -45,7 +49,7 @@
 
 ### 创建会议
 
-`agenda mkmeeting --title Name --participator user1 [user2 ....] --stime start --etime end`
+`agenda cm --title Name --participator user1 [user2 ....] --stime start --etime end`
 
 已登录的用户可以添加一个新会议到其议程安排中。会议可以在多个已注册 用户间举行，不允许包含未注册用户。添加会议时提供的信息应包括：
 会议主题(title)（在会议列表中具有唯一性）
