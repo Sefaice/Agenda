@@ -24,13 +24,79 @@ import (
 var cmCmd = &cobra.Command{
 	Use:   "cm -t [title] -p [p1 p2 ....] -s [sTime] -e [eTime]",
 	Short: "Create Meeting command",
-	Long:  `Create Meeting with title, participators, start time, end time`,
+	Long:  "Create Meeting with title, participators, start time, end time",
 	Run: func(cmd *cobra.Command, args []string) {
 		title, _ := cmd.Flags().GetString("title")
 		participators, _ := cmd.Flags().GetString("participators")
 		sTime, _ := cmd.Flags().GetString("sTime")
 		eTime, _ := cmd.Flags().GetString("eTime")
-		fmt.Println("meetings called with: " + title + " " + participators + " " + sTime + " " + eTime)
+		fmt.Println("cm called with: " + title + " " + participators + " " + sTime + " " + eTime)
+	},
+}
+
+// add participators command
+var apCmd = &cobra.Command{
+	Use:   "ap -p [p1 p2 ...]",
+	Short: "Add Meeting Participators Command",
+	Long:  "Add meeting participators, must be Agenda users",
+	Run: func(cmd *cobra.Command, args []string) {
+		participators, _ := cmd.Flags().GetString("participators")
+		fmt.Println("ap called with: " + participators)
+	},
+}
+
+// delete participators command
+var dpCmd = &cobra.Command{
+	Use:   "dp -p [p1 p2 ...]",
+	Short: "Delete Meeting Participators Command",
+	Long:  "Delete meeting participators, must be Agenda users",
+	Run: func(cmd *cobra.Command, args []string) {
+		participators, _ := cmd.Flags().GetString("participators")
+		fmt.Println("dp called with: " + participators)
+	},
+}
+
+// query meetings command
+var qmCmd = &cobra.Command{
+	Use:   "qm -s [sTime] -e [eTime]",
+	Short: "Query Meetings Command",
+	Long:  "Query meetings between start time and end time",
+	Run: func(cmd *cobra.Command, args []string) {
+		sTime, _ := cmd.Flags().GetString("sTime")
+		eTime, _ := cmd.Flags().GetString("eTime")
+		fmt.Println("qm called with: " + sTime + ", " + eTime)
+	},
+}
+
+// delete meeting command
+var dmCmd = &cobra.Command{
+	Use:   "dm -t [title]",
+	Short: "Delete Meeting Command",
+	Long:  "Delete meeting with title, and you must be the meeting's sponsor",
+	Run: func(cmd *cobra.Command, args []string) {
+		title, _ := cmd.Flags().GetString("title")
+		fmt.Println("dm called with: " + title)
+	},
+}
+
+// quit meeting command
+var quitmCmd = &cobra.Command{
+	Use:   "quitm -t [title]",
+	Short: "Quit Meeting Command",
+	Long:  "Quit meeting with title, and you must be the meeting's participator",
+	Run: func(cmd *cobra.Command, args []string) {
+		title, _ := cmd.Flags().GetString("title")
+		fmt.Println("quitm called with: " + title)
+	},
+}
+
+// clear meetings command
+var clallCmd = &cobra.Command{
+	Use:   "clall",
+	Short: "Clear All Meetings Command",
+	Long:  "Clear all meetings you sponsor",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("clall called")
 	},
 }
 
@@ -41,13 +107,21 @@ func init() {
 	cmCmd.Flags().StringP("sTime", "s", "NULL", "New meeting's start time")
 	cmCmd.Flags().StringP("eTime", "e", "NULL", "New meeting's end time")
 
-	// Here you will define your flags and configuration settings.
+	rootCmd.AddCommand(apCmd)
+	apCmd.Flags().StringP("participators", "p", "NULL", "Add meeting's participators")
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// meetingsCmd.PersistentFlags().String("foo", "", "A help for foo")
+	rootCmd.AddCommand(dpCmd)
+	dpCmd.Flags().StringP("participators", "p", "NULL", "Delete meeting's participators")
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// meetingsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.AddCommand(qmCmd)
+	qmCmd.Flags().StringP("sTime", "s", "NULL", "Start time of meeting")
+	qmCmd.Flags().StringP("eTime", "e", "NULL", "End time of meeting")
+
+	rootCmd.AddCommand(dmCmd)
+	dmCmd.Flags().StringP("title", "t", "NULL", "Title of meeting you want to delete")
+
+	rootCmd.AddCommand(quitmCmd)
+	quitmCmd.Flags().StringP("title", "t", "NULL", "Title of meeting you want to quit")
+
+	rootCmd.AddCommand(clallCmd)
 }

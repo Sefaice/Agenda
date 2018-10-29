@@ -26,7 +26,7 @@ var registerCmd = &cobra.Command{
 	//register -u(--username) [yourUsername] -p(--password) [yourPassword] -e(--email) [yourEmail] -t(--tel) [youTelnumber]
 	Use:   "register -u [username] -p [password] -e [email] -t [tel]",
 	Short: "Register Command",
-	Long:  `Register with username, password, email, tel`,
+	Long:  "Register with username, password, email, tel",
 	Run: func(cmd *cobra.Command, args []string) {
 		username, _ := cmd.Flags().GetString("username")
 		password, _ := cmd.Flags().GetString("password")
@@ -34,6 +34,48 @@ var registerCmd = &cobra.Command{
 		tel, _ := cmd.Flags().GetString("tel")
 		fmt.Println("register called with username: " + username + ", password: " + password + ", email: " + email + ", tel: " + tel)
 		entity.CreateUser(username, password, email, tel)
+	},
+}
+
+// login command
+var loginCmd = &cobra.Command{
+	Use:   "login -u [username] -p [password]",
+	Short: "Login Command",
+	Long:  "Login with username and password",
+	Run: func(cmd *cobra.Command, args []string) {
+		username, _ := cmd.Flags().GetString("username")
+		password, _ := cmd.Flags().GetString("password")
+		fmt.Println("login called with username: " + username + ", password: " + password)
+	},
+}
+
+// logout command
+var logoutCmd = &cobra.Command{
+	Use:   "logout",
+	Short: "Logout Command",
+	Long:  "Logout account",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("logout called")
+	},
+}
+
+// list users command
+var luCmd = &cobra.Command{
+	Use:   "lu",
+	Short: "List All Users Command",
+	Long:  "List all users if you already login",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("lu called")
+	},
+}
+
+// delete account command
+var deleteCmd = &cobra.Command{
+	Use:   "delete",
+	Short: "Delete Account Command",
+	Long:  "Delete your account if you already login",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("delete called")
 	},
 }
 
@@ -45,13 +87,13 @@ func init() {
 	registerCmd.Flags().StringP("email", "e", "NULL", "Your Agenda account's email")
 	registerCmd.Flags().StringP("tel", "t", "NULL", "Your Agenda account's telnumber")
 
-	// Here you will define your flags and configuration settings.
+	rootCmd.AddCommand(loginCmd)
+	loginCmd.Flags().StringP("username", "u", "NULL", "Your Agenda account's username")
+	loginCmd.Flags().StringP("password", "p", "NULL", "Your Agenda account's password")
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// usersCmd.PersistentFlags().String("foo", "", "A help for foo")
+	rootCmd.AddCommand(logoutCmd)
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// usersCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.AddCommand(luCmd)
+
+	rootCmd.AddCommand(deleteCmd)
 }

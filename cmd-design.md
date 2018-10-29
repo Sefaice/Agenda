@@ -21,7 +21,7 @@
 
 ### 用户登录
 
-`agenda login -u [userName] -p [password]`
+`agenda login -u [username] -p [password]`
 
 用户使用用户名和密码登录 Agenda 系统。
 用户名和密码同时正确则登录成功并反馈一个成功登录的信息。否则，登录失败并反馈一个失败登录的信息。
@@ -91,7 +91,7 @@
 
 ### 退出会议
 
-`agenda qm -t [title]`
+`agenda quitm -t [title]`
 
 已登录的用户可以退出 自己参与 的某一会议安排。
 退出会议时，需提供一个唯一标识：会议主题（title）。若因此造成会议 参与者 人数为0，则会议也将被删除。
