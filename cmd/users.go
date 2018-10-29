@@ -46,6 +46,7 @@ var loginCmd = &cobra.Command{
 		username, _ := cmd.Flags().GetString("username")
 		password, _ := cmd.Flags().GetString("password")
 		fmt.Println("login called with username: " + username + ", password: " + password)
+		entity.UserLogin(username, password)
 	},
 }
 
@@ -56,6 +57,7 @@ var logoutCmd = &cobra.Command{
 	Long:  "Logout account",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("logout called")
+		entity.UserLogout()
 	},
 }
 
@@ -66,6 +68,7 @@ var luCmd = &cobra.Command{
 	Long:  "List all users if you already login",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("lu called")
+		entity.PrintAllUsers()
 	},
 }
 
@@ -76,20 +79,21 @@ var deleteCmd = &cobra.Command{
 	Long:  "Delete your account if you already login",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("delete called")
+		entity.DeleteUser()
 	},
 }
 
 func init() {
 
 	rootCmd.AddCommand(registerCmd)
-	registerCmd.Flags().StringP("username", "u", "NULL", "Your Agenda account's username")
-	registerCmd.Flags().StringP("password", "p", "NULL", "Your Agenda account's password")
-	registerCmd.Flags().StringP("email", "e", "NULL", "Your Agenda account's email")
-	registerCmd.Flags().StringP("tel", "t", "NULL", "Your Agenda account's telnumber")
+	registerCmd.Flags().StringP("username", "u", "", "Your Agenda account's username")
+	registerCmd.Flags().StringP("password", "p", "", "Your Agenda account's password")
+	registerCmd.Flags().StringP("email", "e", "", "Your Agenda account's email")
+	registerCmd.Flags().StringP("tel", "t", "", "Your Agenda account's telnumber")
 
 	rootCmd.AddCommand(loginCmd)
-	loginCmd.Flags().StringP("username", "u", "NULL", "Your Agenda account's username")
-	loginCmd.Flags().StringP("password", "p", "NULL", "Your Agenda account's password")
+	loginCmd.Flags().StringP("username", "u", "", "Your Agenda account's username")
+	loginCmd.Flags().StringP("password", "p", "", "Your Agenda account's password")
 
 	rootCmd.AddCommand(logoutCmd)
 

@@ -15,7 +15,7 @@ func init() {
 //func name MUST start with an upper case if you want to call it in other packages
 func CreateUser(username string, password string, email string, tel string) {
 	if username == "" || password == "" || email == "" || tel == "" {
-		fmt.Println("Paramater can't be empty!")
+		fmt.Println("Paramaters can't be empty!")
 		return
 	}
 	for i := 0; i < len(users); i++ {
@@ -85,4 +85,35 @@ func IndexOfUsers() int {
 		}
 	}
 	return -1
+}
+
+func CreateMeeting(title string, participators string, sTime string, eTime string) {
+	if title == "" || participators == "" || sTime == "" || eTime == "" {
+		fmt.Println("Paramaters can't be empty!")
+		return
+	}
+}
+
+func AddParticipators(participators string) {
+
+}
+
+func DeleteParticipators(participators string) {
+
+}
+
+func QueryMeetings(sTime string, eTime string) {
+
+}
+
+func DeleteMeeting(title string) {
+
+}
+
+func QuitMeeting(title string) {
+
+}
+
+func ClearAllMeetings() {
+
 }

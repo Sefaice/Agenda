@@ -32,6 +32,8 @@ func isVaildDate(d Date) bool {
 	return true
 }
 
+/*
 func string2Date(s string) Date {
 
 }
+*/

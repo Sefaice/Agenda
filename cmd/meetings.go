@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/sefaice/Agenda/entity"
 	"github.com/spf13/cobra"
 )
 
@@ -31,6 +32,7 @@ var cmCmd = &cobra.Command{
 		sTime, _ := cmd.Flags().GetString("sTime")
 		eTime, _ := cmd.Flags().GetString("eTime")
 		fmt.Println("cm called with: " + title + " " + participators + " " + sTime + " " + eTime)
+		entity.CreateMeeting(title, participators, sTime, eTime)
 	},
 }
 
@@ -42,6 +44,7 @@ var apCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		participators, _ := cmd.Flags().GetString("participators")
 		fmt.Println("ap called with: " + participators)
+		entity.AddParticipators(participators)
 	},
 }
 
@@ -53,6 +56,7 @@ var dpCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		participators, _ := cmd.Flags().GetString("participators")
 		fmt.Println("dp called with: " + participators)
+		entity.DeleteParticipators(participators)
 	},
 }
 
@@ -65,6 +69,7 @@ var qmCmd = &cobra.Command{
 		sTime, _ := cmd.Flags().GetString("sTime")
 		eTime, _ := cmd.Flags().GetString("eTime")
 		fmt.Println("qm called with: " + sTime + ", " + eTime)
+		entity.QueryMeetings(sTime, eTime)
 	},
 }
 
@@ -76,6 +81,7 @@ var dmCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		title, _ := cmd.Flags().GetString("title")
 		fmt.Println("dm called with: " + title)
+		entity.DeleteMeeting(title)
 	},
 }
 
@@ -87,6 +93,7 @@ var quitmCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		title, _ := cmd.Flags().GetString("title")
 		fmt.Println("quitm called with: " + title)
+		entity.QuitMeeting(title)
 	},
 }
 
@@ -97,31 +104,32 @@ var clallCmd = &cobra.Command{
 	Long:  "Clear all meetings you sponsor",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("clall called")
+		entity.ClearAllMeetings()
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(cmCmd)
-	cmCmd.Flags().StringP("title", "t", "NULL", "New meeting's title")
-	cmCmd.Flags().StringP("participators", "p", "NULL", "New meeting's participators")
-	cmCmd.Flags().StringP("sTime", "s", "NULL", "New meeting's start time")
-	cmCmd.Flags().StringP("eTime", "e", "NULL", "New meeting's end time")
+	cmCmd.Flags().StringP("title", "t", "", "New meeting's title")
+	cmCmd.Flags().StringP("participators", "p", "", "New meeting's participators")
+	cmCmd.Flags().StringP("sTime", "s", "", "New meeting's start time")
+	cmCmd.Flags().StringP("eTime", "e", "", "New meeting's end time")
 
 	rootCmd.AddCommand(apCmd)
-	apCmd.Flags().StringP("participators", "p", "NULL", "Add meeting's participators")
+	apCmd.Flags().StringP("participators", "p", "", "Add meeting's participators")
 
 	rootCmd.AddCommand(dpCmd)
-	dpCmd.Flags().StringP("participators", "p", "NULL", "Delete meeting's participators")
+	dpCmd.Flags().StringP("participators", "p", "", "Delete meeting's participators")
 
 	rootCmd.AddCommand(qmCmd)
-	qmCmd.Flags().StringP("sTime", "s", "NULL", "Start time of meeting")
-	qmCmd.Flags().StringP("eTime", "e", "NULL", "End time of meeting")
+	qmCmd.Flags().StringP("sTime", "s", "", "Start time of meeting")
+	qmCmd.Flags().StringP("eTime", "e", "", "End time of meeting")
 
 	rootCmd.AddCommand(dmCmd)
-	dmCmd.Flags().StringP("title", "t", "NULL", "Title of meeting you want to delete")
+	dmCmd.Flags().StringP("title", "t", "", "Title of meeting you want to delete")
 
 	rootCmd.AddCommand(quitmCmd)
-	quitmCmd.Flags().StringP("title", "t", "NULL", "Title of meeting you want to quit")
+	quitmCmd.Flags().StringP("title", "t", "", "Title of meeting you want to quit")
 
 	rootCmd.AddCommand(clallCmd)
 }
