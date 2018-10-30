@@ -2,15 +2,28 @@ package entity
 
 /* service.go operates on class user*/
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 var users []User
 var meetings []Meeting
 var currentUser User
 
 func init() {
-	currentUser = User{"", "", "", ""}
+	currentUser = User{"wang", "123", "email", "tel"}
+	users = []User{currentUser,
+		User{"li", "123", "email", "tel"},
+		User{"zhang", "123", "email", "tel"}}
+	_, t1 := string2ValidDate("2018-12-22-12-00")
+	_, t2 := string2ValidDate("2018-12-23-12-00")
+	meetings = []Meeting{Meeting{"m1", "wang", []string{"li", "zhang"}, t1, t2}}
 }
+
+/**
+ * users operation
+ */
 
 //func name MUST start with an upper case if you want to call it in other packages
 func CreateUser(username string, password string, email string, tel string) {
@@ -21,6 +34,7 @@ func CreateUser(username string, password string, email string, tel string) {
 	for i := 0; i < len(users); i++ {
 		if users[i].getUsername() == username {
 			fmt.Println("Username: " + username + " is existed!")
+			return
 		}
 	}
 	u := User{username, password, email, tel}
@@ -29,6 +43,10 @@ func CreateUser(username string, password string, email string, tel string) {
 }
 
 func UserLogin(username string, password string) {
+	if username == "" || password == "" {
+		fmt.Println("Paramaters can't be empty!")
+		return
+	}
 	for i := 0; i < len(users); i++ {
 		if users[i].getUsername() == username {
 			if users[i].getPassword() == password {
@@ -67,8 +85,8 @@ func DeleteUser() {
 		fmt.Println("Login First!")
 		return
 	}
-	QuitAllMeetings()
-	pos := IndexOfUsers()
+	quitAllMeetings()
+	pos := indexOfUsers()
 	if pos < 0 {
 		fmt.Println("User: " + currentUser.getUsername() + " is not exist!")
 		return
@@ -78,7 +96,11 @@ func DeleteUser() {
 	currentUser = User{"", "", "", ""}
 }
 
-func IndexOfUsers() int {
+/**
+ * users bridge funcs
+ */
+
+func indexOfUsers() int {
 	for i := 0; i < len(users); i++ {
 		if users[i].getUsername() == currentUser.getUsername() {
 			return i
@@ -87,33 +109,333 @@ func IndexOfUsers() int {
 	return -1
 }
 
-func CreateMeeting(title string, participators string, sTime string, eTime string) {
-	if title == "" || participators == "" || sTime == "" || eTime == "" {
+func getIndexOfUserByName(username string) int {
+	for i := 0; i < len(users); i++ {
+		if users[i].getUsername() == username {
+			return i
+		}
+	}
+	return -1
+}
+
+/**
+ * meetings operation
+ */
+
+func CreateMeeting(title string, pStr string, sStr string, eStr string) {
+	if title == "" || pStr == "" || sStr == "" || eStr == "" {
 		fmt.Println("Paramaters can't be empty!")
+		return
+	}
+	//need login
+	if len(currentUser.getUsername()) <= 0 {
+		fmt.Println("Login First!")
+		return
+	}
+	//title distinct
+	for i := 0; i < len(meetings); i++ {
+		if meetings[i].getTitle() == title {
+			fmt.Println("Title: " + title + " is existed!")
+			return
+		}
+	}
+	//participators must be Agenda users
+	pValid, pArr := parseParticipators(pStr)
+	if !pValid {
+		return
+	}
+	//sTime eTime valid
+	sValid, sDate := string2ValidDate(sStr)
+	if !sValid {
+		fmt.Println("Start time " + sStr + " invalid!")
+		return
+	}
+	eValid, eDate := string2ValidDate(eStr)
+	if !eValid {
+		fmt.Println("End time " + eStr + " invalid!")
+		return
+	}
+	if !compareDate(sDate, eDate) {
+		fmt.Println("Start time should be earlier than end time!")
+		return
+	}
+	//sponsor time available
+	if !timeAvailable(currentUser, sDate, eDate) {
+		fmt.Println("Sponsor time not available!")
+		return
+	}
+	//participators' time available
+	if !pTimeAvailable(pArr, sDate, eDate) {
+		fmt.Println("Participators time not available!")
+		return
+	}
+	//success
+	m := Meeting{title, currentUser.getUsername(), pArr, sDate, eDate}
+	meetings = append(meetings, m)
+	fmt.Println("Create meeting: " + title + " success! ")
+}
+
+func AddParticipators(title string, pStr string) {
+	if title == "" || pStr == "" {
+		fmt.Println("Paramaters can't be empty!")
+		return
+	}
+	//need login
+	if len(currentUser.getUsername()) <= 0 {
+		fmt.Println("Login First!")
+		return
+	}
+	//meeting exists and must be sponsor
+	index := getIndexOfMeetingByTitle(title)
+	if index == -1 {
+		fmt.Println("Meeting " + title + " does not exist!")
+		return
+	}
+	m := meetings[index]
+	if m.getSponsor() != currentUser.getUsername() {
+		fmt.Println("You are not sponsor of this meeting!")
+		return
+	}
+	//participators must be Agenda users
+	pValid, pArr := parseParticipators(pStr)
+	if !pValid {
+		return
+	}
+	//not already sponsor or participator
+	for i := 0; i < len(pArr); i++ {
+		if m.isParticipatorOrSponsor(users[getIndexOfUserByName(pArr[i])]) {
+			fmt.Println(pArr[i] + " is already a sponsor or participator of this meeting!")
+			return
+		}
+	}
+	//time available
+	if !pTimeAvailable(pArr, m.getStart(), m.getEnd()) {
+		fmt.Println("Participators time not available!")
+		return
+	}
+	//success
+	m.addParticipators(pArr)
+	fmt.Println("Add participators " + getParticipatorsStr(pArr) + " success!")
+}
+
+func DeleteParticipators(title string, pStr string) {
+	if title == "" || pStr == "" {
+		fmt.Println("Paramaters can't be empty!")
+		return
+	}
+	//need login
+	if len(currentUser.getUsername()) <= 0 {
+		fmt.Println("Login First!")
+		return
+	}
+	//meeting exists and must be sponsor
+	index := getIndexOfMeetingByTitle(title)
+	if index == -1 {
+		fmt.Println("Meeting " + title + " does not exist!")
+		return
+	}
+	m := meetings[index]
+	if m.getSponsor() != currentUser.getUsername() {
+		fmt.Println("You are not sponsor of this meeting!")
+		return
+	}
+	//participators must be Agenda users
+	pValid, pArr := parseParticipators(pStr)
+	if !pValid {
+		return
+	}
+	//cannot be sponsor
+	for i := 0; i < len(pArr); i++ {
+		if m.getSponsor() == pArr[i] {
+			fmt.Println(pArr[i] + " is already a sponsor of this meeting!")
+			return
+		}
+	}
+	//must already a participator
+	for i := 0; i < len(pArr); i++ {
+		if !m.isParticipatorOrSponsor(users[getIndexOfUserByName(pArr[i])]) {
+			fmt.Println(pArr[i] + " is not a participator of this meeting!")
+			return
+		}
+	}
+	//success
+	m.deleteParticipators(pArr)
+	fmt.Println("Delete participators " + getParticipatorsStr(pArr) + " success!")
+}
+
+func QueryMeetings(sStr string, eStr string) {
+	if sStr == "" || eStr == "" {
+		fmt.Println("Paramaters can't be empty!")
+		return
+	}
+	//need login
+	if len(currentUser.getUsername()) <= 0 {
+		fmt.Println("Login First!")
+		return
+	}
+	//time valid
+	sValid, sDate := string2ValidDate(sStr)
+	if !sValid {
+		fmt.Println("Start time " + sStr + " invalid!")
+		return
+	}
+	eValid, eDate := string2ValidDate(eStr)
+	if !eValid {
+		fmt.Println("End time " + eStr + " invalid!")
+		return
+	}
+	if !compareDate(sDate, eDate) {
+		fmt.Println("Start time should be earlier than end time!")
+		return
+	}
+	//query
+	for _, m := range meetings {
+		if m.isParticipatorOrSponsor(currentUser) {
+			ms := m.getStart()
+			me := m.getEnd()
+			// (ms <= s < me) || (ms < e <= me) || (s <= ms < e) || (s < me <=e)
+			if (!compareDate(sDate, ms) && compareDate(sDate, me)) ||
+				(compareDate(ms, eDate) && (compareDate(eDate, me) || equalDate(eDate, me))) ||
+				(!compareDate(ms, sDate) && compareDate(ms, eDate)) ||
+				(compareDate(sDate, me) && (compareDate(me, eDate) || equalDate(me, eDate))) {
+				m.printMeeting()
+			}
+		}
+	}
+}
+
+func DeleteMeeting(title string) {
+	if title == "" {
+		fmt.Println("Paramater can't be empty!")
+		return
+	}
+	//need login
+	if len(currentUser.getUsername()) <= 0 {
+		fmt.Println("Login First!")
+		return
+	}
+	//meeting exists and must be sponsor
+	index := getIndexOfMeetingByTitle(title)
+	if index == -1 {
+		fmt.Println("Meeting " + title + " does not exist!")
+		return
+	}
+	m := meetings[index]
+	if m.getSponsor() != currentUser.getUsername() {
+		fmt.Println("You are not sponsor of this meeting!")
+		return
+	}
+	//success
+	meetings = append(meetings[:index], meetings[:index+1]...)
+	fmt.Println("Delete meeting " + title + " success!")
+}
+
+func QuitMeeting(title string) {
+	if title == "" {
+		fmt.Println("Paramater can't be empty!")
+		return
+	}
+	//need login
+	if len(currentUser.getUsername()) <= 0 {
+		fmt.Println("Login First!")
+		return
+	}
+	//meeting exists
+	index := getIndexOfMeetingByTitle(title)
+	if index == -1 {
+		fmt.Println("Meeting " + title + " does not exist!")
+		return
+	}
+	m := meetings[index]
+	//must be sponsor or participator
+	if !m.isParticipatorOrSponsor(currentUser) {
+		fmt.Println("You are not sponsor or participator of thie meeting!")
+		return
+	}
+	//quit the meeting
+	if m.getSponsor() == currentUser.getUsername() {
+		meetings = append(meetings[:index], meetings[:index+1]...)
+		fmt.Println("Quit meeting " + title + " success and the meeting is deleted!")
+	} else {
+		m.deleteParticipators([]string{currentUser.getUsername()})
+		fmt.Println("Quit meeting " + title + " success!")
+	}
+}
+
+func ClearAllMeetings() {
+	//need login
+	if len(currentUser.getUsername()) <= 0 {
+		fmt.Println("Login First!")
 		return
 	}
 }
 
-func AddParticipators(participators string) {
+/**
+ * meetings bridge funcs
+ */
 
+func getIndexOfMeetingByTitle(title string) int {
+	for i := 0; i < len(meetings); i++ {
+		if meetings[i].getTitle() == title {
+			return i
+		}
+	}
+	return -1
 }
 
-func DeleteParticipators(participators string) {
-
+func parseParticipators(pStr string) (bool, []string) {
+	pArr := strings.Split(pStr, ",")
+	for i := 0; i < len(pArr); i++ {
+		if getIndexOfUserByName(pArr[i]) == -1 {
+			fmt.Println("Participator " + pArr[i] + " is not Agenda user!")
+			return false, []string{}
+		}
+	}
+	return true, pArr
 }
 
-func QueryMeetings(sTime string, eTime string) {
-
+//TAKE DATES VALID
+func timeAvailable(u User, sDate Date, eDate Date) bool {
+	//get u's all meetings and check each one for date
+	for _, m := range meetings {
+		if m.isParticipatorOrSponsor(u) {
+			ms := m.getStart()
+			me := m.getEnd()
+			// (ms <= s < me) || (ms < e <= me) || (s <= ms < e) || (s < me <=e)
+			if (!compareDate(sDate, ms) && compareDate(sDate, me)) ||
+				(compareDate(ms, eDate) && (compareDate(eDate, me) || equalDate(eDate, me))) ||
+				(!compareDate(ms, sDate) && compareDate(ms, eDate)) ||
+				(compareDate(sDate, me) && (compareDate(me, eDate) || equalDate(me, eDate))) {
+				return false
+			}
+		}
+	}
+	return true
 }
 
-func DeleteMeeting(title string) {
-
+//TAKE PARR, SDATE, EDATE AS VALID
+func pTimeAvailable(pArr []string, sDate Date, eDate Date) bool {
+	for i := 0; i < len(pArr); i++ {
+		index := getIndexOfUserByName(pArr[i])
+		if index != -1 {
+			if !timeAvailable(users[index], sDate, eDate) {
+				return false
+			}
+		}
+	}
+	return true
 }
 
-func QuitMeeting(title string) {
-
-}
-
-func ClearAllMeetings() {
-
+//quit all meetings for current user
+func quitAllMeetings() {
+	for _, m := range meetings {
+		if m.getSponsor() == currentUser.getUsername() {
+			index := getIndexOfMeetingByTitle(m.getTitle())
+			meetings = append(meetings[:index], meetings[:index+1]...)
+			fmt.Println("Quit meeting " + m.getTitle() + " success and the meeting is deleted!")
+		} else {
+			m.deleteParticipators([]string{currentUser.getUsername()})
+			fmt.Println("Quit meeting " + m.getTitle() + " success!")
+		}
+	}
 }

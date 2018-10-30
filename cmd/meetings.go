@@ -38,25 +38,27 @@ var cmCmd = &cobra.Command{
 
 // add participators command
 var apCmd = &cobra.Command{
-	Use:   "ap -p [p1 p2 ...]",
+	Use:   "ap -t [title] -p [p1 p2 ...]",
 	Short: "Add Meeting Participators Command",
 	Long:  "Add meeting participators, must be Agenda users",
 	Run: func(cmd *cobra.Command, args []string) {
+		title, _ := cmd.Flags().GetString("title")
 		participators, _ := cmd.Flags().GetString("participators")
-		fmt.Println("ap called with: " + participators)
-		entity.AddParticipators(participators)
+		fmt.Println("ap called with: " + title + ", " + participators)
+		entity.AddParticipators(title, participators)
 	},
 }
 
 // delete participators command
 var dpCmd = &cobra.Command{
-	Use:   "dp -p [p1 p2 ...]",
+	Use:   "dp -t [title] -p [p1 p2 ...]",
 	Short: "Delete Meeting Participators Command",
 	Long:  "Delete meeting participators, must be Agenda users",
 	Run: func(cmd *cobra.Command, args []string) {
+		title, _ := cmd.Flags().GetString("title")
 		participators, _ := cmd.Flags().GetString("participators")
-		fmt.Println("dp called with: " + participators)
-		entity.DeleteParticipators(participators)
+		fmt.Println("dp called with: " + title + ", " + participators)
+		entity.DeleteParticipators(title, participators)
 	},
 }
 
@@ -116,9 +118,11 @@ func init() {
 	cmCmd.Flags().StringP("eTime", "e", "", "New meeting's end time")
 
 	rootCmd.AddCommand(apCmd)
+	apCmd.Flags().StringP("title", "t", "", "Title of Meeting")
 	apCmd.Flags().StringP("participators", "p", "", "Add meeting's participators")
 
 	rootCmd.AddCommand(dpCmd)
+	dpCmd.Flags().StringP("title", "t", "", "Title of Meeting")
 	dpCmd.Flags().StringP("participators", "p", "", "Delete meeting's participators")
 
 	rootCmd.AddCommand(qmCmd)
