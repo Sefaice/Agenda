@@ -39,6 +39,7 @@ func CreateUser(username string, password string, email string, tel string) {
 	}
 	u := User{username, password, email, tel}
 	users = append(users, u)
+	UserWriteFile(users)
 	fmt.Println("Create user: " + username + " success! ")
 }
 
@@ -94,6 +95,8 @@ func DeleteUser() {
 	users = append(users[:pos], users[pos+1:]...)
 	fmt.Println("User: " + currentUser.getUsername() + " delete seccess!")
 	currentUser = User{"", "", "", ""}
+
+	UserWriteFile(users);
 }
 
 /**
@@ -173,6 +176,8 @@ func CreateMeeting(title string, pStr string, sStr string, eStr string) {
 	m := Meeting{title, currentUser.getUsername(), pArr, sDate, eDate}
 	meetings = append(meetings, m)
 	fmt.Println("Create meeting: " + title + " success! ")
+
+	MeetingWriteFile(meetings);
 }
 
 func AddParticipators(title string, pStr string) {
@@ -216,6 +221,8 @@ func AddParticipators(title string, pStr string) {
 	//success
 	m.addParticipators(pArr)
 	fmt.Println("Add participators " + getParticipatorsStr(pArr) + " success!")
+
+	MeetingWriteFile(meetings);
 }
 
 func DeleteParticipators(title string, pStr string) {
@@ -261,6 +268,9 @@ func DeleteParticipators(title string, pStr string) {
 	//success
 	m.deleteParticipators(pArr)
 	fmt.Println("Delete participators " + getParticipatorsStr(pArr) + " success!")
+
+	MeetingWriteFile(meetings);
+
 }
 
 func QueryMeetings(sStr string, eStr string) {
@@ -328,6 +338,8 @@ func DeleteMeeting(title string) {
 	//success
 	meetings = append(meetings[:index], meetings[:index+1]...)
 	fmt.Println("Delete meeting " + title + " success!")
+
+	MeetingWriteFile(meetings);
 }
 
 func QuitMeeting(title string) {
@@ -360,6 +372,8 @@ func QuitMeeting(title string) {
 		m.deleteParticipators([]string{currentUser.getUsername()})
 		fmt.Println("Quit meeting " + title + " success!")
 	}
+
+	MeetingWriteFile(meetings);
 }
 
 func ClearAllMeetings() {
@@ -368,6 +382,7 @@ func ClearAllMeetings() {
 		fmt.Println("Login First!")
 		return
 	}
+	MeetingWriteFile(meetings);
 }
 
 /**
@@ -438,4 +453,6 @@ func quitAllMeetings() {
 			fmt.Println("Quit meeting " + m.getTitle() + " success!")
 		}
 	}
+
+	MeetingWriteFile(meetings);
 }
