@@ -3,31 +3,31 @@ package entity
 /* user.go is actually class User */
 
 type User struct {
-	username string
-	password string
-	email    string
-	tel      string
+	Username string
+	Password string
+	Email    string
+	Tel      string
 }
 
 func (u User) getUsername() string {
-	return u.username
+	return u.Username
 }
 
 func (u User) getPassword() string {
-	return u.password
+	return u.Password
 }
 
 func (u User) getEmail() string {
-	return u.email
+	return u.Email
 }
 
 func (u User) getTel() string {
-	return u.tel
+	return u.Tel
 }
 
 func (src User) copy(tar *User) {
-	tar.username = src.username
-	tar.password = src.password
-	tar.email = src.email
-	tar.tel = src.tel
+	tar.Username = src.Username
+	tar.Password = src.Password
+	tar.Email = src.Email
+	tar.Tel = src.Tel
 }

@@ -5,45 +5,45 @@ import (
 )
 
 type Meeting struct {
-	title         string
-	sponsor       string
-	participators []string
-	sDate, eDate  Date
+	Title         string
+	Sponsor       string
+	Participators []string
+	SDate, EDate  Date
 }
 
 func (m Meeting) getSponsor() string {
-	return m.sponsor
+	return m.Sponsor
 }
 
 func (m Meeting) getParticipators() []string {
-	return m.participators
+	return m.Participators
 }
 
 func (m Meeting) getTitle() string {
-	return m.title
+	return m.Title
 }
 
 func (m Meeting) getStart() Date {
-	return m.sDate
+	return m.SDate
 }
 
 func (m Meeting) getEnd() Date {
-	return m.eDate
+	return m.EDate
 }
 
 func (m Meeting) printMeeting() {
-	fmt.Println("MEETING INFO---Title: " + m.title + " Sponsor: " + m.sponsor +
-		" Participators: " + getParticipatorsStr(m.participators) +
-		" Start Time: " + date2String(m.sDate) + " End Time: " + date2String(m.eDate))
+	fmt.Println("MEETING INFO---Title: " + m.Title + " Sponsor: " + m.Sponsor +
+		" Participators: " + getParticipatorsStr(m.Participators) +
+		" Start Time: " + date2String(m.SDate) + " End Time: " + date2String(m.EDate))
 }
 
 func (m Meeting) isParticipatorOrSponsor(u User) bool {
 	name := u.getUsername()
-	if m.sponsor == name {
+	if m.Sponsor == name {
 		return true
 	}
-	for i := 0; i < len(m.participators); i++ {
-		if m.participators[i] == name {
+	for i := 0; i < len(m.Participators); i++ {
+		if m.Participators[i] == name {
 			return true
 		}
 	}
@@ -53,21 +53,21 @@ func (m Meeting) isParticipatorOrSponsor(u User) bool {
 //TAKE PARR ALL AS VALID USERS
 func (m Meeting) addParticipators(pArr []string) {
 	for _, p := range pArr {
-		m.participators = append(m.participators, p)
+		m.Participators = append(m.Participators, p)
 	}
 }
 
 //TAKE PARR ALL AS VALID USERS
 func (m Meeting) deleteParticipators(pArr []string) {
 	for _, p := range pArr {
-		for i, q := range m.participators {
+		for i, q := range m.Participators {
 			if q == p {
-				m.participators = append(m.participators[:i], m.participators[i+1:]...)
+				m.Participators = append(m.Participators[:i], m.Participators[i+1:]...)
 			}
 		}
 	}
 
-	fmt.Println(m.participators)
+	fmt.Println(m.Participators)
 }
 
 func getParticipatorsStr(pArr []string) string {
