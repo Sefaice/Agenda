@@ -41,7 +41,8 @@ func UserWriteFile(userArr []User) {
 	defer file.Close()
 
 	for i:=0; i<len(userArr);i++{
-		file.WriteString(string(UserJsonEncode(userArr[i])[:]))
+		//fmt.Println(userArr[i])
+		file.WriteString(string(UserJsonEncode(userArr[i])))
 		file.WriteString("\n")
 	}
 	

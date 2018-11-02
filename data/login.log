@@ -16,3 +16,31 @@ LOG: 2018/11/02 11:13:21 Logger.go:51: There is the log message
 LOG: 2018/11/02 11:13:21 service.go:49: Create user: zzt success! 
 LOG: 2018/11/02 11:13:54 Logger.go:51: There is the log message
 LOG: 2018/11/02 11:13:54 service.go:49: Create user: zzt success! 
+LOG: 2018/11/02 14:38:20 Logger.go:51: There is the log message
+LOG: 2018/11/02 14:38:20 service.go:49: Create user: zzt success! 
+LOG: 2018/11/02 14:39:00 Logger.go:51: There is the log message
+LOG: 2018/11/02 14:39:57 Logger.go:51: There is the log message
+LOG: 2018/11/02 14:39:57 service.go:49: Create user: zzt success! 
+LOG: 2018/11/02 14:40:24 Logger.go:51: There is the log message
+LOG: 2018/11/02 14:40:24 service.go:49: Create user: zzt success! 
+LOG: 2018/11/02 14:44:35 Logger.go:51: There is the log message
+LOG: 2018/11/02 14:44:35 service.go:49: Create user: zzt success! 
+LOG: 2018/11/02 14:47:12 Logger.go:51: There is the log message
+LOG: 2018/11/02 14:47:12 service.go:49: Create user: zzt success! 
+LOG: 2018/11/02 14:47:35 Logger.go:51: There is the log message
+LOG: 2018/11/02 14:47:35 service.go:49: Create user: zzt success! 
+LOG: 2018/11/02 14:47:51 Logger.go:51: There is the log message
+LOG: 2018/11/02 14:47:51 service.go:49: Create user: zzt success! 
+LOG: 2018/11/02 14:49:22 Logger.go:51: There is the log message
+LOG: 2018/11/02 14:49:22 service.go:49: Create user: zzt success! 
+LOG: 2018/11/02 14:53:12 Logger.go:51: There is the log message
+LOG: 2018/11/02 14:53:12 service.go:49: Create user: zzt success! 
+LOG: 2018/11/02 14:55:31 Logger.go:51: There is the log message
+LOG: 2018/11/02 14:55:31 service.go:49: Create user: zzt success! 
+LOG: 2018/11/02 14:55:55 Logger.go:51: There is the log message
+LOG: 2018/11/02 14:55:55 service.go:49: Create user: zzt success! 
+LOG: 2018/11/02 15:00:53 Logger.go:51: There is the log message
+LOG: 2018/11/02 15:00:53 service.go:49: Create user: zzt success! 
+LOG: 2018/11/02 15:04:05 Logger.go:51: There is the log message
+LOG: 2018/11/02 15:04:05 service.go:62: User: zzt login success!
+LOG: 2018/11/02 15:04:14 Logger.go:51: There is the log message
