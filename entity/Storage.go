@@ -31,6 +31,7 @@ func Init(){
 //I first think the info array should be in storage.go but zwz and frc has implmented major functions in service.go 
 //so 
 func UserWriteFile(userArr []User) {
+	fmt.Println("fucksadsads",userArr);
 	file, err := os.OpenFile("entity/data/User.txt",os.O_WRONLY|os.O_APPEND|os.O_CREATE,0666)
 	os.Truncate("entity/data/User.txt",0);
 	if err !=nil {

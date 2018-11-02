@@ -12,13 +12,16 @@ var meetings []Meeting
 var currentUser User
 
 func init() {
-	currentUser = User{"wang", "123", "email", "tel"}
-	users = []User{currentUser,
+	currentUser = User{}
+	users = UserReadFromFile()
+	/*[]User{currentUser,
 		User{"li", "123", "email", "tel"},
 		User{"zhang", "123", "email", "tel"}}
-	_, t1 := string2ValidDate("2018-12-22-12-00")
-	_, t2 := string2ValidDate("2018-12-23-12-00")
-	meetings = []Meeting{Meeting{"m1", "wang", []string{"li", "zhang"}, t1, t2}}
+		*/
+	//_, t1 := string2ValidDate("2018-12-22-12-00")
+	//_, t2 := string2ValidDate("2018-12-23-12-00")
+	meetings = MeetingReadFromFile()
+	//[]Meeting{Meeting{"m1", "wang", []string{"li", "zhang"}, t1, t2}}
 }
 
 /**
@@ -34,13 +37,16 @@ func CreateUser(username string, password string, email string, tel string) {
 	for i := 0; i < len(users); i++ {
 		if users[i].getUsername() == username {
 			fmt.Println("Username: " + username + " is existed!")
+			Error.Println("Username: " + username + " is existed!")
 			return
 		}
 	}
 	u := User{username, password, email, tel}
 	users = append(users, u)
+	fmt.Println("usersasdasdasdasd" , users);
 	UserWriteFile(users)
 	fmt.Println("Create user: " + username + " success! ")
+	Login.Println("Create user: " + username + " success! ")
 }
 
 func UserLogin(username string, password string) {
@@ -53,8 +59,10 @@ func UserLogin(username string, password string) {
 			if users[i].getPassword() == password {
 				users[i].copy(&currentUser)
 				fmt.Println("User: " + username + " login success!")
+				Login.Println("User: " + username + " login success!")
 			} else {
 				fmt.Println("Password is wrong!")
+				Error.Println("Password is wrong!")
 			}
 			return
 		}
