@@ -44,3 +44,141 @@ LOG: 2018/11/02 15:00:53 service.go:49: Create user: zzt success!
 LOG: 2018/11/02 15:04:05 Logger.go:51: There is the log message
 LOG: 2018/11/02 15:04:05 service.go:62: User: zzt login success!
 LOG: 2018/11/02 15:04:14 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:12:02 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:13:03 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:13:03 service.go:62: User: zzt login success!
+LOG: 2018/11/02 20:17:13 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:17:13 service.go:62: User: zzt login success!
+LOG: 2018/11/02 20:17:29 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:18:04 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:18:06 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:18:06 service.go:62: User: zzt login success!
+LOG: 2018/11/02 20:18:17 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:27:35 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:27:35 service.go:62: User: zzt login success!
+LOG: 2018/11/02 20:27:43 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:27:43 service.go:93: zzt
+print all users
+LOG: 2018/11/02 20:44:46 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:46 service.go:98: zzt
+print all users
+LOG: 2018/11/02 20:44:52 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:45:24 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:45:24 service.go:55: try to log in repeatedly
+LOG: 2018/11/02 20:45:36 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:45:36 service.go:86: User: zzt
+ log out seccess!
+LOG: 2018/11/02 20:45:50 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:47:20 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:50:45 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:50:45 service.go:55: try to log in repeatedly
+LOG: 2018/11/02 20:51:07 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:51:30 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:51:30 service.go:55: try to log in repeatedly
+LOG: 2018/11/02 20:51:34 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:51:34 service.go:86: User: zzt
+ log out seccess!
+LOG: 2018/11/02 20:51:38 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:51:38 service.go:55: try to log in repeatedly
+LOG: 2018/11/02 20:51:54 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:51:54 service.go:86: User: 
+ log out seccess!
+LOG: 2018/11/02 20:51:57 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:51:57 service.go:55: try to log in repeatedly
+LOG: 2018/11/02 20:52:05 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:52:05 service.go:86: User: 
+ log out seccess!
+LOG: 2018/11/02 20:52:08 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:52:08 service.go:55: try to log in repeatedly
+LOG: 2018/11/02 20:53:28 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:53:28 service.go:55: try to log in repeatedly
+LOG: 2018/11/02 20:53:30 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:53:30 service.go:86: User: 
+ log out seccess!
+LOG: 2018/11/02 20:53:34 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:54:54 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:54:57 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:55:43 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:55:43 service.go:56: try to log in repeatedly
+LOG: 2018/11/02 20:55:47 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:55:47 service.go:87: User: 
+ log out seccess!
+LOG: 2018/11/02 20:55:53 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:55:53 service.go:56: try to log in repeatedly
+LOG: 2018/11/02 20:57:08 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:57:08 service.go:56: try to log in repeatedly
+LOG: 2018/11/02 20:57:11 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:57:11 service.go:87: User: 
+ log out seccess!
+LOG: 2018/11/02 20:57:16 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:57:16 service.go:87: User: 1
+ log out seccess!
+LOG: 2018/11/02 20:57:23 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:57:23 service.go:56: try to log in repeatedly
+LOG: 2018/11/02 20:57:28 Logger.go:51: There is the log message
+LOG: 2018/11/02 20:57:28 service.go:87: User: 1
+ log out seccess!
