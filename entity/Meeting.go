@@ -11,33 +11,33 @@ type Meeting struct {
 	SDate, EDate  Date
 }
 
-func (m Meeting) getSponsor() string {
+func (m *Meeting) getSponsor() string {
 	return m.Sponsor
 }
 
-func (m Meeting) getParticipators() []string {
+func (m *Meeting) getParticipators() []string {
 	return m.Participators
 }
 
-func (m Meeting) getTitle() string {
+func (m *Meeting) getTitle() string {
 	return m.Title
 }
 
-func (m Meeting) getStart() Date {
+func (m *Meeting) getStart() Date {
 	return m.SDate
 }
 
-func (m Meeting) getEnd() Date {
+func (m *Meeting) getEnd() Date {
 	return m.EDate
 }
 
-func (m Meeting) printMeeting() {
+func (m *Meeting) printMeeting() {
 	fmt.Println("MEETING INFO---Title: " + m.Title + " Sponsor: " + m.Sponsor +
 		" Participators: " + getParticipatorsStr(m.Participators) +
 		" Start Time: " + date2String(m.SDate) + " End Time: " + date2String(m.EDate))
 }
 
-func (m Meeting) isParticipatorOrSponsor(u User) bool {
+func (m *Meeting) isParticipatorOrSponsor(u User) bool {
 	name := u.getUsername()
 	if m.Sponsor == name {
 		return true
@@ -51,14 +51,14 @@ func (m Meeting) isParticipatorOrSponsor(u User) bool {
 }
 
 //TAKE PARR ALL AS VALID USERS
-func (m Meeting) addParticipators(pArr []string) {
+func (m *Meeting) addParticipators(pArr []string) {
 	for _, p := range pArr {
 		m.Participators = append(m.Participators, p)
 	}
 }
 
 //TAKE PARR ALL AS VALID USERS
-func (m Meeting) deleteParticipators(pArr []string) {
+func (m *Meeting) deleteParticipators(pArr []string) {
 	for _, p := range pArr {
 		for i, q := range m.Participators {
 			if q == p {
@@ -66,8 +66,6 @@ func (m Meeting) deleteParticipators(pArr []string) {
 			}
 		}
 	}
-
-	fmt.Println(m.Participators)
 }
 
 func getParticipatorsStr(pArr []string) string {

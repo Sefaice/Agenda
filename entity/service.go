@@ -12,12 +12,12 @@ var meetings []Meeting
 var currentUser User
 
 func init() {
-	currentUser = User{ReadCurUserFromFile(),"","",""}
+	currentUser = User{ReadCurUserFromFile(), "", "", ""}
 	users = UserReadFromFile()
-	/*[]User{currentUser, 
-		User{"li", "123", "email", "tel"},
-		User{"zhang", "123", "email", "tel"}}
-		*/
+	/*[]User{currentUser,
+	User{"li", "123", "email", "tel"},
+	User{"zhang", "123", "email", "tel"}}
+	*/
 	//_, t1 := string2ValidDate("2018-12-22-12-00")
 	//_, t2 := string2ValidDate("2018-12-23-12-00")
 	meetings = MeetingReadFromFile()
@@ -43,18 +43,18 @@ func CreateUser(username string, password string, email string, tel string) {
 	}
 	u := User{username, password, email, tel}
 	users = append(users, u)
-	fmt.Println("usersasdasdasdasd" , users);
+	//fmt.Println("usersasdasdasdasd", users)
 	UserWriteFile(users)
 	fmt.Println("Create user: " + username + " success! ")
 	Login.Println("Create user: " + username + " success! ")
 }
 
 func UserLogin(username string, password string) {
-	fmt.Println(currentUser.getUsername())
-	if currentUser.getUsername() != "1" {
+	//fmt.Println(currentUser.getUsername())
+	if currentUser.getUsername() != "" {
 		fmt.Println("you should log out first")
 		Login.Println("try to log in repeatedly")
-		return ;
+		return
 	}
 	if username == "" || password == "" {
 		fmt.Println("Paramaters can't be empty!")
@@ -74,7 +74,7 @@ func UserLogin(username string, password string) {
 			return
 		}
 	}
-	
+
 	fmt.Println("User: " + username + " is not exist!")
 }
 
@@ -96,7 +96,7 @@ func PrintAllUsers() {
 	}
 	for i := 0; i < len(users); i++ {
 		fmt.Println(users[i].getUsername() + "   " + users[i].getEmail() + "    " + users[i].getTel())
-		Login.Println(currentUser.getUsername() +  "print all users");
+		Login.Println(currentUser.getUsername() + "print all users")
 	}
 }
 
@@ -113,10 +113,10 @@ func DeleteUser() {
 	}
 	users = append(users[:pos], users[pos+1:]...)
 	fmt.Println("User: " + currentUser.getUsername() + " delete seccess!")
-	Login.Println("delete user" + currentUser.getUsername())	
+	Login.Println("delete user" + currentUser.getUsername())
 	currentUser = User{"", "", "", ""}
-
-	UserWriteFile(users);
+	CurUserFileDelete()
+	UserWriteFile(users)
 }
 
 /**
@@ -196,8 +196,8 @@ func CreateMeeting(title string, pStr string, sStr string, eStr string) {
 	m := Meeting{title, currentUser.getUsername(), pArr, sDate, eDate}
 	meetings = append(meetings, m)
 	fmt.Println("Create meeting: " + title + " success! ")
-	Login.Println("creating meeting" + title+"successfully!")
-	MeetingWriteFile(meetings);
+	Login.Println("creating meeting" + title + "successfully!")
+	MeetingWriteFile(meetings)
 }
 
 func AddParticipators(title string, pStr string) {
@@ -216,8 +216,8 @@ func AddParticipators(title string, pStr string) {
 		fmt.Println("Meeting " + title + " does not exist!")
 		return
 	}
-	m := meetings[index]
-	if m.getSponsor() != currentUser.getUsername() {
+	//use index instead
+	if meetings[index].getSponsor() != currentUser.getUsername() {
 		fmt.Println("You are not sponsor of this meeting!")
 		return
 	}
@@ -228,21 +228,21 @@ func AddParticipators(title string, pStr string) {
 	}
 	//not already sponsor or participator
 	for i := 0; i < len(pArr); i++ {
-		if m.isParticipatorOrSponsor(users[getIndexOfUserByName(pArr[i])]) {
+		if meetings[index].isParticipatorOrSponsor(users[getIndexOfUserByName(pArr[i])]) {
 			fmt.Println(pArr[i] + " is already a sponsor or participator of this meeting!")
 			return
 		}
 	}
 	//time available
-	if !pTimeAvailable(pArr, m.getStart(), m.getEnd()) {
+	if !pTimeAvailable(pArr, meetings[index].getStart(), meetings[index].getEnd()) {
 		fmt.Println("Participators time not available!")
 		return
 	}
 	//success
-	m.addParticipators(pArr)
+	meetings[index].addParticipators(pArr)
 	fmt.Println("Add participators " + getParticipatorsStr(pArr) + " success!")
-	Login.Println(title + "add participator " + pStr +" successfully")
-	MeetingWriteFile(meetings);
+	Login.Println(title + "add participator " + pStr + " successfully")
+	MeetingWriteFile(meetings)
 }
 
 func DeleteParticipators(title string, pStr string) {
@@ -261,8 +261,7 @@ func DeleteParticipators(title string, pStr string) {
 		fmt.Println("Meeting " + title + " does not exist!")
 		return
 	}
-	m := meetings[index]
-	if m.getSponsor() != currentUser.getUsername() {
+	if meetings[index].getSponsor() != currentUser.getUsername() {
 		fmt.Println("You are not sponsor of this meeting!")
 		return
 	}
@@ -273,24 +272,23 @@ func DeleteParticipators(title string, pStr string) {
 	}
 	//cannot be sponsor
 	for i := 0; i < len(pArr); i++ {
-		if m.getSponsor() == pArr[i] {
+		if meetings[index].getSponsor() == pArr[i] {
 			fmt.Println(pArr[i] + " is already a sponsor of this meeting!")
 			return
 		}
 	}
 	//must already a participator
 	for i := 0; i < len(pArr); i++ {
-		if !m.isParticipatorOrSponsor(users[getIndexOfUserByName(pArr[i])]) {
+		if !meetings[index].isParticipatorOrSponsor(users[getIndexOfUserByName(pArr[i])]) {
 			fmt.Println(pArr[i] + " is not a participator of this meeting!")
 			return
 		}
 	}
 	//success
-	m.deleteParticipators(pArr)
+	meetings[index].deleteParticipators(pArr)
 	fmt.Println("Delete participators " + getParticipatorsStr(pArr) + " success!")
-	Login.Println(title + "delete participator "+ pStr +" successfully ")
-	MeetingWriteFile(meetings);
-
+	Login.Println(title + "delete participator " + pStr + " successfully ")
+	MeetingWriteFile(meetings)
 }
 
 func QueryMeetings(sStr string, eStr string) {
@@ -358,8 +356,8 @@ func DeleteMeeting(title string) {
 	//success
 	meetings = append(meetings[:index], meetings[:index+1]...)
 	fmt.Println("Delete meeting " + title + " success!")
-	Login.Println("delete meeting " + title+" successfully")
-	MeetingWriteFile(meetings);
+	Login.Println("delete meeting " + title + " successfully")
+	MeetingWriteFile(meetings)
 }
 
 func QuitMeeting(title string) {
@@ -393,7 +391,7 @@ func QuitMeeting(title string) {
 		fmt.Println("Quit meeting " + title + " success!")
 	}
 
-	MeetingWriteFile(meetings);
+	MeetingWriteFile(meetings)
 }
 
 func ClearAllMeetings() {
@@ -402,7 +400,7 @@ func ClearAllMeetings() {
 		fmt.Println("Login First!")
 		return
 	}
-	MeetingWriteFile(meetings);
+	MeetingWriteFile(meetings)
 }
 
 /**
@@ -474,5 +472,5 @@ func quitAllMeetings() {
 		}
 	}
 
-	MeetingWriteFile(meetings);
+	MeetingWriteFile(meetings)
 }

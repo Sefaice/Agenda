@@ -15,9 +15,7 @@
 package cmd
 
 import (
-	"fmt"
-
-	"github.com/873421427/Agenda/entity"
+	"github.com/sefaice/Agenda/entity"
 	"github.com/spf13/cobra"
 )
 
@@ -32,7 +30,7 @@ var registerCmd = &cobra.Command{
 		password, _ := cmd.Flags().GetString("password")
 		email, _ := cmd.Flags().GetString("email")
 		tel, _ := cmd.Flags().GetString("tel")
-		fmt.Println("register called with username: " + username + ", password: " + password + ", email: " + email + ", tel: " + tel)
+		//fmt.Println("register called with username: " + username + ", password: " + password + ", email: " + email + ", tel: " + tel)
 		entity.CreateUser(username, password, email, tel)
 	},
 }
@@ -45,7 +43,7 @@ var loginCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		username, _ := cmd.Flags().GetString("username")
 		password, _ := cmd.Flags().GetString("password")
-		fmt.Println("login called with username: " + username + ", password: " + password)
+		//fmt.Println("login called with username: " + username + ", password: " + password)
 		entity.UserLogin(username, password)
 	},
 }
@@ -56,7 +54,7 @@ var logoutCmd = &cobra.Command{
 	Short: "Logout Command",
 	Long:  "Logout account",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("logout called")
+		//fmt.Println("logout called")
 		entity.UserLogout()
 	},
 }
@@ -67,7 +65,7 @@ var luCmd = &cobra.Command{
 	Short: "List All Users Command",
 	Long:  "List all users if you already login",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("lu called")
+		//fmt.Println("lu called")
 		entity.PrintAllUsers()
 	},
 }
@@ -78,7 +76,7 @@ var deleteCmd = &cobra.Command{
 	Short: "Delete Account Command",
 	Long:  "Delete your account if you already login",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("delete called")
+		//fmt.Println("delete called")
 		entity.DeleteUser()
 	},
 }

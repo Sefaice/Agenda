@@ -15,9 +15,7 @@
 package cmd
 
 import (
-	"fmt"
-
-	"github.com/873421427/Agenda/entity"
+	"github.com/sefaice/Agenda/entity"
 	"github.com/spf13/cobra"
 )
 
@@ -31,7 +29,7 @@ var cmCmd = &cobra.Command{
 		participators, _ := cmd.Flags().GetString("participators")
 		sTime, _ := cmd.Flags().GetString("sTime")
 		eTime, _ := cmd.Flags().GetString("eTime")
-		fmt.Println("cm called with: " + title + " " + participators + " " + sTime + " " + eTime)
+		//fmt.Println("cm called with: " + title + " " + participators + " " + sTime + " " + eTime)
 		entity.CreateMeeting(title, participators, sTime, eTime)
 	},
 }
@@ -44,7 +42,7 @@ var apCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		title, _ := cmd.Flags().GetString("title")
 		participators, _ := cmd.Flags().GetString("participators")
-		fmt.Println("ap called with: " + title + ", " + participators)
+		//fmt.Println("ap called with: " + title + ", " + participators)
 		entity.AddParticipators(title, participators)
 	},
 }
@@ -57,7 +55,7 @@ var dpCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		title, _ := cmd.Flags().GetString("title")
 		participators, _ := cmd.Flags().GetString("participators")
-		fmt.Println("dp called with: " + title + ", " + participators)
+		//fmt.Println("dp called with: " + title + ", " + participators)
 		entity.DeleteParticipators(title, participators)
 	},
 }
@@ -70,7 +68,7 @@ var qmCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		sTime, _ := cmd.Flags().GetString("sTime")
 		eTime, _ := cmd.Flags().GetString("eTime")
-		fmt.Println("qm called with: " + sTime + ", " + eTime)
+		//fmt.Println("qm called with: " + sTime + ", " + eTime)
 		entity.QueryMeetings(sTime, eTime)
 	},
 }
@@ -82,7 +80,7 @@ var dmCmd = &cobra.Command{
 	Long:  "Delete meeting with title, and you must be the meeting's sponsor",
 	Run: func(cmd *cobra.Command, args []string) {
 		title, _ := cmd.Flags().GetString("title")
-		fmt.Println("dm called with: " + title)
+		//fmt.Println("dm called with: " + title)
 		entity.DeleteMeeting(title)
 	},
 }
@@ -94,7 +92,7 @@ var quitmCmd = &cobra.Command{
 	Long:  "Quit meeting with title, and you must be the meeting's participator",
 	Run: func(cmd *cobra.Command, args []string) {
 		title, _ := cmd.Flags().GetString("title")
-		fmt.Println("quitm called with: " + title)
+		//fmt.Println("quitm called with: " + title)
 		entity.QuitMeeting(title)
 	},
 }
@@ -105,7 +103,7 @@ var clallCmd = &cobra.Command{
 	Short: "Clear All Meetings Command",
 	Long:  "Clear all meetings you sponsor",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("clall called")
+		//fmt.Println("clall called")
 		entity.ClearAllMeetings()
 	},
 }
