@@ -67,6 +67,46 @@ func UserReadFromFile() []User {
 	return tmp;
 }
 
+func CurUserWriteFile(curUser string) {
+	file, err := os.OpenFile("entity/data/curUser.txt",os.O_WRONLY|os.O_APPEND|os.O_CREATE,0666)
+	if err != nil{
+		Error.Println("write curuser to file failed")
+		os.Exit(1)
+	}
+	defer file.Close()
+	//file.WriteString(string(UserJsonEncode()))
+	file.WriteString(curUser);
+	file.WriteString("\n")
+}
+
+func CurUserFileDelete(){
+	file, err := os.OpenFile("entity/data/curUser.txt",os.O_WRONLY|os.O_TRUNC|os.O_CREATE,0666)
+	if err != nil{
+		fmt.Println("opening curuser file failed")
+	}
+	defer file.Close();
+
+	file.WriteString("1")
+	file.WriteString("\n")
+}
+
+func ReadCurUserFromFile() string{
+	//var tmp User;
+	f, err:=os.Open("entity/data/curUser.txt")
+	if err != nil{
+		panic(err)
+	}
+	defer f.Close()
+	rd:=bufio.NewReader(f);
+	line, err:=rd.ReadString('\n')
+	if err != nil{
+		fmt.Println(err )
+		os.Exit(1)
+	}
+
+	return line;
+}
+
 func MeetingReadFromFile() []Meeting{
 	var tmp []Meeting;
 	f, err := os.Open("entity/data/Meeting.txt")

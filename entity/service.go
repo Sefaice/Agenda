@@ -12,9 +12,9 @@ var meetings []Meeting
 var currentUser User
 
 func init() {
-	currentUser = User{}
+	currentUser = User{ReadCurUserFromFile(),"","",""}
 	users = UserReadFromFile()
-	/*[]User{currentUser,
+	/*[]User{currentUser, 
 		User{"li", "123", "email", "tel"},
 		User{"zhang", "123", "email", "tel"}}
 		*/
@@ -50,6 +50,12 @@ func CreateUser(username string, password string, email string, tel string) {
 }
 
 func UserLogin(username string, password string) {
+	fmt.Println(currentUser.getUsername())
+	if currentUser.getUsername() != "1" {
+		fmt.Println("you should log out first")
+		Login.Println("try to log in repeatedly")
+		return ;
+	}
 	if username == "" || password == "" {
 		fmt.Println("Paramaters can't be empty!")
 		return
@@ -60,6 +66,7 @@ func UserLogin(username string, password string) {
 				users[i].copy(&currentUser)
 				fmt.Println("User: " + username + " login success!")
 				Login.Println("User: " + username + " login success!")
+				CurUserWriteFile(username)
 			} else {
 				fmt.Println("Password is wrong!")
 				Error.Println("Password is wrong!")
@@ -67,6 +74,7 @@ func UserLogin(username string, password string) {
 			return
 		}
 	}
+	
 	fmt.Println("User: " + username + " is not exist!")
 }
 
@@ -76,6 +84,8 @@ func UserLogout() {
 		return
 	}
 	fmt.Println("User: " + currentUser.getUsername() + " log out seccess!")
+	Login.Println("User: " + currentUser.getUsername() + " log out seccess!")
+	CurUserFileDelete()
 	currentUser = User{"", "", "", ""}
 }
 
@@ -86,6 +96,7 @@ func PrintAllUsers() {
 	}
 	for i := 0; i < len(users); i++ {
 		fmt.Println(users[i].getUsername() + "   " + users[i].getEmail() + "    " + users[i].getTel())
+		Login.Println(currentUser.getUsername() +  "print all users");
 	}
 }
 
@@ -102,6 +113,7 @@ func DeleteUser() {
 	}
 	users = append(users[:pos], users[pos+1:]...)
 	fmt.Println("User: " + currentUser.getUsername() + " delete seccess!")
+	Login.Println("delete user" + currentUser.getUsername())	
 	currentUser = User{"", "", "", ""}
 
 	UserWriteFile(users);
@@ -184,7 +196,7 @@ func CreateMeeting(title string, pStr string, sStr string, eStr string) {
 	m := Meeting{title, currentUser.getUsername(), pArr, sDate, eDate}
 	meetings = append(meetings, m)
 	fmt.Println("Create meeting: " + title + " success! ")
-
+	Login.Println("creating meeting" + title+"successfully!")
 	MeetingWriteFile(meetings);
 }
 
@@ -229,7 +241,7 @@ func AddParticipators(title string, pStr string) {
 	//success
 	m.addParticipators(pArr)
 	fmt.Println("Add participators " + getParticipatorsStr(pArr) + " success!")
-
+	Login.Println(title + "add participator " + pStr +" successfully")
 	MeetingWriteFile(meetings);
 }
 
@@ -276,7 +288,7 @@ func DeleteParticipators(title string, pStr string) {
 	//success
 	m.deleteParticipators(pArr)
 	fmt.Println("Delete participators " + getParticipatorsStr(pArr) + " success!")
-
+	Login.Println(title + "delete participator "+ pStr +" successfully ")
 	MeetingWriteFile(meetings);
 
 }
@@ -346,7 +358,7 @@ func DeleteMeeting(title string) {
 	//success
 	meetings = append(meetings[:index], meetings[:index+1]...)
 	fmt.Println("Delete meeting " + title + " success!")
-
+	Login.Println("delete meeting " + title+" successfully")
 	MeetingWriteFile(meetings);
 }
 
